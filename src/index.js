@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import "./styles.css";
+import * as data from "./data.json";
 
 class Square extends React.Component {
   render() {
@@ -36,34 +37,40 @@ class Board extends React.Component {
     const squares = this.state.squares.slice();
     const i = this.state.selected;
     const number = Number(event.key);
+    const answer = data[1].answer;
     if (i != null && squares[i] === null) {
-      if (
-        !checkSquare(squares, number, i) &&
-        !checkLine(squares, number, i) &&
-        !checkRow(squares, number, i)
-      ) {
-        if (event.key === "1") {
-          squares[i] = 1;
-        } else if (event.key === "2") {
-          squares[i] = 2;
-        } else if (event.key === "3") {
-          squares[i] = 3;
-        } else if (event.key === "4") {
-          squares[i] = 4;
-        } else if (event.key === "5") {
-          squares[i] = 5;
-        } else if (event.key === "6") {
-          squares[i] = 6;
-        } else if (event.key === "7") {
-          squares[i] = 7;
-        } else if (event.key === "8") {
-          squares[i] = 8;
-        } else if (event.key === "9") {
-          squares[i] = 9;
-        }
+      if (number === answer[i]) {
+        squares[i] = number;
       } else {
         alert("Wrong!");
       }
+      // if (
+      //   !checkSquare(squares, number, i) &&
+      //   !checkLine(squares, number, i) &&
+      //   !checkRow(squares, number, i)
+      // ) {
+      //   if (event.key === "1") {
+      //     squares[i] = 1;
+      //   } else if (event.key === "2") {
+      //     squares[i] = 2;
+      //   } else if (event.key === "3") {
+      //     squares[i] = 3;
+      //   } else if (event.key === "4") {
+      //     squares[i] = 4;
+      //   } else if (event.key === "5") {
+      //     squares[i] = 5;
+      //   } else if (event.key === "6") {
+      //     squares[i] = 6;
+      //   } else if (event.key === "7") {
+      //     squares[i] = 7;
+      //   } else if (event.key === "8") {
+      //     squares[i] = 8;
+      //   } else if (event.key === "9") {
+      //     squares[i] = 9;
+      //   }
+      // } else {
+      //   alert("Wrong!");
+      // }
     }
     this.setState({
       squares: squares,
@@ -170,89 +177,8 @@ class Game extends React.Component {
     //     choices.splice(iChoice, 1);
     //   }
     // }
-    let squares = [
-      9,
-      null,
-      2,
-      null,
-      null,
-      5,
-      null,
-      3,
-      7,
-      null,
-      null,
-      null,
-      7,
-      2,
-      null,
-      8,
-      null,
-      1,
-      null,
-      1,
-      null,
-      null,
-      9,
-      null,
-      null,
-      6,
-      5,
-      1,
-      7,
-      null,
-      null,
-      8,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      4,
-      9,
-      null,
-      3,
-      null,
-      null,
-      7,
-      6,
-      3,
-      8,
-      null,
-      7,
-      null,
-      null,
-      5,
-      1,
-      null,
-      null,
-      3,
-      null,
-      null,
-      null,
-      2,
-      9,
-      1,
-      null,
-      6,
-      2,
-      null,
-      null,
-      null,
-      5,
-      3,
-      null,
-      null,
-      8,
-      9,
-      1,
-      null,
-      null,
-      7,
-      null,
-      null
-    ];
+    // console.log(data);
+    let squares = data[1].puzzle;
     this.setState({
       squares: squares
     });
