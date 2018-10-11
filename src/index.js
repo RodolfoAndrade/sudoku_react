@@ -26,7 +26,7 @@ class Board extends React.Component {
 
   componentDidUpdate(prevProps) {
     // Typical usage (don't forget to compare props):
-    if (this.props.squares !== prevProps.squares) {
+    if (this.props.reset !== prevProps.reset) {
       this.setState({
         squares: this.props.squares
       });
@@ -141,7 +141,8 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      squares: Array(81).fill(null)
+      squares: Array(81).fill(null),
+      reset: false
     };
   }
 
@@ -180,7 +181,8 @@ class Game extends React.Component {
     // console.log(data);
     let squares = data[1].puzzle;
     this.setState({
-      squares: squares
+      squares: squares,
+      reset: !this.state.reset
     });
   }
 
@@ -194,7 +196,7 @@ class Game extends React.Component {
           </div>
         </div>
         <div className="game-board">
-          <Board squares={this.state.squares} />
+          <Board squares={this.state.squares} reset={this.state.reset} />
         </div>
       </div>
     );
