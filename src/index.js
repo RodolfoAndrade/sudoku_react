@@ -18,12 +18,18 @@ class Square extends React.Component {
 }
 
 class Board extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      squares: this.props.squares,
-      selected: null
-    };
+  state = {
+    squares: this.props.squares,
+    selected: null
+  };
+
+  componentDidUpdate(prevProps) {
+    // Typical usage (don't forget to compare props):
+    if (this.props.squares !== prevProps.squares) {
+      this.setState({
+        squares: this.props.squares
+      });
+    }
   }
 
   handleKeyPress = event => {
@@ -58,12 +64,6 @@ class Board extends React.Component {
       } else {
         alert("Wrong!");
       }
-    }
-    let empty = squares.filter((i, j) => {
-      return i;
-    });
-    if (81 - empty.length === 0) {
-      alert("You won!");
     }
     this.setState({
       squares: squares,
@@ -120,6 +120,12 @@ class Board extends React.Component {
   }
 
   render() {
+    // let empty = this.state.squares.filter((i, j) => {
+    //   return i;
+    // });
+    // if (81 - empty.length === 0) {
+    //   alert("You won!");
+    // }
     return <table>{this.createTable()}</table>;
   }
 }
@@ -127,6 +133,43 @@ class Board extends React.Component {
 class Game extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      squares: Array(81).fill(null)
+    };
+  }
+
+  getRandomInt(min, max) {
+    return Math.floor(Math.random() * Math.floor(max)) + min;
+  }
+
+  createGame() {
+    // let squares = this.state.squares;
+    // let places = Array.apply(null, { length: 81 }).map(Function.call, Number);
+    // let choices = places.slice().map(i => (i % 9) + 1);
+    // let count = 0;
+    // while (count < 20) {
+    //   let iPlace = this.getRandomInt(0, places.length);
+    //   let iChoice = this.getRandomInt(0, choices.length);
+    //   // console.log("places:", places);
+    //   // console.log("choices:", choices);
+    //   // console.log("iPlace:", iPlace);
+    //   // console.log("iChoice:", iChoice);
+    //   let number = choices[iChoice];
+    //   let place = places[iPlace];
+    //   // console.log("number:", number);
+    //   if (
+    //     squares[place] === null &&
+    //     !checkSquare(squares, number, place) &&
+    //     !checkLine(squares, number, place) &&
+    //     !checkRow(squares, number, place)
+    //   ) {
+    //     // console.log("number:", number);
+    //     squares[place] = number;
+    //     count++;
+    //     places.splice(iPlace, 1);
+    //     choices.splice(iChoice, 1);
+    //   }
+    // }
     let squares = [
       9,
       null,
@@ -210,46 +253,8 @@ class Game extends React.Component {
       null,
       null
     ];
-    this.state = {
-      squares: squares
-    };
-    // this.createGame();
-  }
-
-  getRandomInt(min, max) {
-    return Math.floor(Math.random() * Math.floor(max)) + min;
-  }
-
-  createGame() {
-    // let squares = this.state.squares;
-    // let places = Array.apply(null, { length: 81 }).map(Function.call, Number);
-    // let choices = places.slice().map(i => (i % 9) + 1);
-    // let count = 0;
-    // while (count < 20) {
-    //   let iPlace = this.getRandomInt(0, places.length);
-    //   let iChoice = this.getRandomInt(0, choices.length);
-    //   // console.log("places:", places);
-    //   // console.log("choices:", choices);
-    //   // console.log("iPlace:", iPlace);
-    //   // console.log("iChoice:", iChoice);
-    //   let number = choices[iChoice];
-    //   let place = places[iPlace];
-    //   // console.log("number:", number);
-    //   if (
-    //     squares[place] === null &&
-    //     !checkSquare(squares, number, place) &&
-    //     !checkLine(squares, number, place) &&
-    //     !checkRow(squares, number, place)
-    //   ) {
-    //     // console.log("number:", number);
-    //     squares[place] = number;
-    //     count++;
-    //     places.splice(iPlace, 1);
-    //     choices.splice(iChoice, 1);
-    //   }
-    // }
     this.setState({
-      squares: Array(81).fill(null)
+      squares: squares
     });
   }
 
