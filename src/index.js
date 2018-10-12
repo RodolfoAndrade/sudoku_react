@@ -21,14 +21,16 @@ class Square extends React.Component {
 class Board extends React.Component {
   state = {
     squares: this.props.squares,
-    selected: null
+    selected: null,
+    level: null
   };
 
   componentDidUpdate(prevProps) {
     // Typical usage (don't forget to compare props):
     if (this.props.reset !== prevProps.reset) {
       this.setState({
-        squares: this.props.squares
+        squares: this.props.squares,
+        level: this.props.level
       });
     }
   }
@@ -37,7 +39,8 @@ class Board extends React.Component {
     const squares = this.state.squares.slice();
     const i = this.state.selected;
     const number = Number(event.key);
-    const answer = data[1].answer;
+    const level = this.state.level;
+    const answer = data[level].answer;
     if (i != null && squares[i] === null) {
       if (number === answer[i]) {
         squares[i] = number;
@@ -142,7 +145,8 @@ class Game extends React.Component {
     super(props);
     this.state = {
       squares: Array(81).fill(null),
-      reset: false
+      reset: false,
+      level: null
     };
   }
 
@@ -150,7 +154,7 @@ class Game extends React.Component {
     return Math.floor(Math.random() * Math.floor(max)) + min;
   }
 
-  createGame() {
+  createGame(level) {
     // let squares = this.state.squares;
     // let places = Array.apply(null, { length: 81 }).map(Function.call, Number);
     // let choices = places.slice().map(i => (i % 9) + 1);
@@ -179,10 +183,11 @@ class Game extends React.Component {
     //   }
     // }
     // console.log(data);
-    let squares = data[1].puzzle;
+    let squares = data[level].puzzle;
     this.setState({
       squares: squares,
-      reset: !this.state.reset
+      reset: !this.state.reset,
+      level: level
     });
   }
 
@@ -192,7 +197,13 @@ class Game extends React.Component {
         <div className="game-menu">
           <div>New Game:</div>
           <div>
-            <button onClick={() => this.createGame()}>Easy</button>
+            <button onClick={() => this.createGame("easy")}>Easy</button>
+          </div>
+          <div>
+            <button onClick={() => this.createGame("medium")}>Medium</button>
+          </div>
+          <div>
+            <button onClick={() => this.createGame("hard")}>Hard</button>
           </div>
         </div>
         <div className="game-board">
