@@ -28,6 +28,7 @@ class Board extends React.Component {
   componentDidUpdate(prevProps) {
     // Typical usage (don't forget to compare props):
     if (this.props.reset !== prevProps.reset) {
+      // console.log(this.props);
       this.setState({
         squares: this.props.squares,
         level: this.props.level
@@ -40,6 +41,8 @@ class Board extends React.Component {
     const i = this.state.selected;
     const number = Number(event.key);
     const level = this.state.level;
+    // console.log(level);
+    // console.log(data);
     const answer = data[level].answer;
     if (i != null && squares[i] === null) {
       if (number === answer[i]) {
@@ -76,8 +79,7 @@ class Board extends React.Component {
       // }
     }
     this.setState({
-      squares: squares,
-      selected: i
+      squares: squares
     });
   };
 
@@ -144,9 +146,9 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      squares: Array(81).fill(null),
+      squares: data["easy"].puzzle,
       reset: false,
-      level: null
+      level: "easy"
     };
   }
 
@@ -182,7 +184,7 @@ class Game extends React.Component {
     //     choices.splice(iChoice, 1);
     //   }
     // }
-    // console.log(data);
+    // console.log(level);
     let squares = data[level].puzzle;
     this.setState({
       squares: squares,
@@ -207,7 +209,11 @@ class Game extends React.Component {
           </div>
         </div>
         <div className="game-board">
-          <Board squares={this.state.squares} reset={this.state.reset} />
+          <Board
+            squares={this.state.squares}
+            reset={this.state.reset}
+            level={this.state.level}
+          />
         </div>
       </div>
     );
